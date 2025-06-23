@@ -1,0 +1,82 @@
+<html>
+	<head>
+	
+	<title>SproutBot</title>
+	<!-- Load libraries -->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.3.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+
+	</head>
+	
+	<body>
+		<h1>SproutBot's first website!</h1>
+		<button onclick="startCamera()">Start Camera</button>
+		<button onclick="stopPredicting()">Stop predicting</button>
+
+		<video id="webcam" width="300" height="300" autoplay playsinline></video>
+		<div id="predictionOutput"></div>
+	</body>
+	
+	<script>
+	
+		const URL = "https://teachablemachine.withgoogle.com/models/GTazmdcml/";
+		const videoIn = document.getElementById("webcam");
+		let model,maxPredictions,intervalID;
+		
+		function startFeed(){
+		navigator.mediaDevices.getUserMedia({video:true}).then(stream => {videoIn.srcObject = stream;}).catch((err) => {
+		console.error("Could not start camera:", err);
+		alert("Camera permission denied or not supported.");
+		});
+		}
+		
+		async function startCamera() {
+			try {
+				const stream = await navigator.mediaDevices.getUserMedia({
+				video: { facingMode: { ideal: "environment" } }}
+				);
+				
+				videoIn.srcObject = stream;
+				await loadModel();
+				startPredicting();
+			} catch (err) {
+				console.error("Camera error:", err);
+				alert("Could not access the camera.");
+			}
+		}
+
+		async function loadModel(){
+		
+			const modelURL = URL + "model.json";
+			const metadataURL = URL + "metadata.json";
+			model = await tmImage.load(modelURL,metadataURL);
+			maxPredictions = model.getTotalClasses();
+			
+		}
+		
+		async function predictFromCamera(){
+			if(!model){
+				return;
+			}else{
+			let output = "";
+			const prediction = await model.predict(videoIn);
+			prediction.forEach(p => {
+				output += `${p.className}: ${p.probability.toFixed(2)}<br>`;});
+				document.getElementById("predictionOutput").innerHTML = output;		
+			}
+		}
+		
+		function startPredicting(){
+			intervalID = setInterval(predictFromCamera,500);
+		}
+		
+		function stopPredicting(){
+			clearInterval(intervalID);
+		}
+		
+
+			
+	
+	</script>
+
+</html>
