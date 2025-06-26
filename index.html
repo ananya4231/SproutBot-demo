@@ -51,7 +51,7 @@
 			const metadataURL = URL + "metadata.json";
 			model = await tmImage.load(modelURL,metadataURL);
 			maxPredictions = model.getTotalClasses();
-			
+			console.log("loaded");
 		}
 		
 		async function predictFromCamera(){
@@ -74,12 +74,12 @@
 			if(highest.probability > 0.5){
 				console.log(prediction);
 				if(highest.className === "Suitable soil"){
-					outputVal.innerHTML = `Suitable soil: ${confidence}%`;
+					outputVal.innerHTML = `Suitable soil`;
 					console.log("Suitable");
 				}else if(highest.className === "Not suitable soil"){
-					outputVal.innerHTML = `Not clear enough: ${confidence}%`;
+					outputVal.innerHTML = `Not clear enough`;
 				}else{
-				outputVal.innerHTML = `Not soil: ${confidence}%`;
+				outputVal.innerHTML = `Not soil`;
 					console.log("Not suitable");
 				}
 			}
