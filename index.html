@@ -60,10 +60,31 @@
 			}else{
 			let output = "";
 			const prediction = await model.predict(videoIn);
-			prediction.forEach(p => {
+
+			let highest = prediction[0];
+			for(let i = 1; i<prediction.length;i++){
+				if(prediction[i].probability > highest){
+					highest = prediction[i];
+				}
+			}
+			const outputVal = document.getElementById("predictionOutput");
+			const confidence = (highest.probability * 100).toFixed(0);
+
+			if(highest.probability > 0.5){
+				if(highest.className === "Suitable soil"){
+					outputVal.innerHTML = `Suitable soil: ${confidence}%`;
+				}else if(highest.className === "Not Suitable Soil"){
+					outputVal.innerHTML = `Not clear enough: ${confidence}%`;
+				}else{
+				outputVal.innerHTML = `Not soil: ${confidence}%`;
+				}
+			}
+				
+				
+			/*prediction.forEach(p => {
 				output += `${p.className}: ${p.probability.toFixed(2)}<br>`;});
 				document.getElementById("predictionOutput").innerHTML = output;		
-			}
+			}*/
 		}
 		
 		function startPredicting(){
