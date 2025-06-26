@@ -70,7 +70,7 @@
 				console.log(prediction);
 			const outputVal = document.getElementById("predictionOutput");
 			const confidence = (highest.probability * 100).toFixed(0);
-
+	console.log(highest.probability);
 			if(highest.probability > 0.2){
 				console.log("here");
 				if(highest.className === "Suitable soil"){
