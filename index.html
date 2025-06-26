@@ -74,12 +74,12 @@
 			if(highest.probability > 0.2){
 				console.log("here");
 				if(highest.className === "Suitable soil"){
-					outputVal.innerHTML = 'Suitable soil';
+					outputVal.innerHTML = 'Suitable soil ' + confidence + "%";
 					console.log("Suitable");
 				}else if(highest.className === "Not suitable soil"){
-					outputVal.innerHTML = 'Not clear enough';
+					outputVal.innerHTML = 'Not clear enough '+ confidence + "%";
 				}else{
-				outputVal.innerHTML = 'Not soil';
+				outputVal.innerHTML = 'Not soil ' + confidence + "%";
 					console.log("Not suitable");
 				}
 			}else{
@@ -95,7 +95,7 @@
 		}
 		
 		function startPredicting(){
-			intervalID = setInterval(predictFromCamera,3000);
+			intervalID = setInterval(predictFromCamera,1100);
 		}
 		
 		function stopPredicting(){
