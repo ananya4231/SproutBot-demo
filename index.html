@@ -67,14 +67,16 @@
 					highest = prediction[i];
 				}
 			}
+				console.log(prediction);
 			const outputVal = document.getElementById("predictionOutput");
 			const confidence = (highest.probability * 100).toFixed(0);
 
 			if(highest.probability > 0.5){
+				console.log(prediction);
 				if(highest.className === "Suitable soil"){
 					outputVal.innerHTML = `Suitable soil: ${confidence}%`;
 					console.log("Suitable");
-				}else if(highest.className === "Not Suitable Soil"){
+				}else if(highest.className === "Not suitable soil"){
 					outputVal.innerHTML = `Not clear enough: ${confidence}%`;
 				}else{
 				outputVal.innerHTML = `Not soil: ${confidence}%`;
