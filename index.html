@@ -63,7 +63,7 @@
 
 			let highest = prediction[0];
 			for(let i = 1; i<prediction.length;i++){
-				if(prediction[i].probability > highest){
+				if(prediction[i].probability > highest.probability){
 					highest = prediction[i];
 				}
 			}
