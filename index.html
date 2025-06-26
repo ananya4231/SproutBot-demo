@@ -73,10 +73,12 @@
 			if(highest.probability > 0.5){
 				if(highest.className === "Suitable soil"){
 					outputVal.innerHTML = `Suitable soil: ${confidence}%`;
+					console.log("Suitable");
 				}else if(highest.className === "Not Suitable Soil"){
 					outputVal.innerHTML = `Not clear enough: ${confidence}%`;
 				}else{
 				outputVal.innerHTML = `Not soil: ${confidence}%`;
+					console.log("Not suitable");
 				}
 			}
 				
